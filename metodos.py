@@ -87,16 +87,24 @@ def rellenar_tablero(array, horizontal, tamanyo, x, y, caracter_barco):
 
 def ver_tablero(array, alto):
     """
-    Muestra por consola el contenido del tablero.
+    Muestra por consola el tablero de juego con índices de filas y columnas.
 
-    :param array: Tablero a mostrar.
-    :type array: list
+    El tablero se imprime en formato matricial:
+    - La primera línea muestra los índices de las columnas.
+    - Cada fila se muestra precedida por su índice correspondiente.
+
+    :param array: Tablero bidimensional a mostrar.
+    :type array: list[list[str]]
     :param alto: Número de filas del tablero.
     :type alto: int
     :return: None
     """
+    encabezado = "   " + " ".join(str(i) for i in range(len(array[0])))
+    print(encabezado)
+
     for i in range(alto):
-        print(array[i])
+        fila_str = f"{i:<2} " + " ".join(array[i])
+        print(fila_str)
 
 
 def opcion_valida(valor, opcion_maxima):
