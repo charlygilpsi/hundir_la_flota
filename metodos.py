@@ -36,8 +36,14 @@ def rellenar_tablero(array, horizontal, tamanyo, x, y, caracter_barco):
 
 # Imprime por consola el tablero
 def ver_tablero(array, alto):
+    # Imprimir encabezado de columnas (0 a 9)
+    encabezado = "   " + " ".join(str(i) for i in range(len(array[0])))
+    print(encabezado)
+    
+    # Imprimir cada fila con su índice al inicio
     for i in range(alto):
-        print(array[i])
+        fila_str = f"{i:<2} " + " ".join(array[i])
+        print(fila_str)
 
 # Comprueba si la opción introducida es un entero dentro del rango
 def opcion_valida(valor, opcion_maxima):
