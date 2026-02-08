@@ -1,23 +1,19 @@
-def disparo_acertado(array_original, array_copia, x, y):
+def disparo_acertado(array_copia, x, y, caracter_barco):
     """
     Comprueba si un disparo ha impactado en un barco.
 
-    :param array_original: Tablero visible para el jugador.
-    :type array_original: list
     :param array_copia: Tablero interno con los barcos.
     :type array_copia: list
     :param x: Coordenada X del disparo.
     :type x: int
     :param y: Coordenada Y del disparo.
     :type y: int
+    :param caracter_barco: Carácter que representa el barco.
+    :type caracter_barco: str
     :return: True si el disparo ha sido acertado, False en caso contrario.
     :rtype: bool
-    """
-    if array_copia[y][x] == "1":
-        return True
-    else:
-        array_original[y][x] = "O"
-        return False
+    """   
+    return array_copia[y][x] == caracter_barco
 
 
 def marcar_disparo(array_original, array_copia, x, y, caracter):

@@ -124,7 +124,7 @@ def ya_hay_barco_en_posicion(array, horizontal, tamanyo, x, y, caracter_barco):
     return False
 
 
-def quedan_barcos(array, ancho, alto):
+def quedan_barcos(array, ancho, alto, caracter_barco):
     """
     Comprueba si quedan barcos sin hundir en el tablero.
 
@@ -134,12 +134,14 @@ def quedan_barcos(array, ancho, alto):
     :type ancho: int
     :param alto: Número de filas del tablero.
     :type alto: int
+    :param caracter_barco: Carácter que representa el barco.
+    :type caracter_barco: str
     :return: True si quedan barcos, False si no.
     :rtype: bool
     """
     for i in range(alto):
         for j in range(ancho):
-            if array[i][j] == "1":
+            if array[i][j] == caracter_barco:
                 return True
     return False
 

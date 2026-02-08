@@ -102,11 +102,11 @@ while contador < CANTIDAD_DISPAROS and not victoria:
         print("")
         continue
 
-    if disparo.disparo_acertado(array_original, array_copia, int(posicion_x), int(posicion_y)): # Comprobar si se ha acertado en un barco
+    if disparo.disparo_acertado(array_copia, int(posicion_x), int(posicion_y), CARACTER_POSICION_BARCO): # Comprobar si se ha acertado en un barco
         disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_TOCADO)
         print("")
         print(TEXTO_TOCADO)
-        if not tablero.quedan_barcos(array_copia, ANCHO, ALTO): # Comprobar si quedan barcos
+        if not tablero.quedan_barcos(array_copia, ANCHO, ALTO, CARACTER_POSICION_BARCO): # Comprobar si quedan barcos
             victoria = True
     else:
         disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_AGUA)
