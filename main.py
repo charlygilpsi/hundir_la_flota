@@ -129,12 +129,18 @@ while contador < CANTIDAD_DISPAROS and not victoria:
     tablero.ver_tablero(array_original, ALTO) # Mostrar tablero con los disparos efectuados
     print("")
     print(TEXTO_BALAS_RESTANTES, CANTIDAD_DISPAROS - contador) # Mostrar mensaje con las balas restantes
-    
+
+os.system('cls') # Borrar consola
+
 if victoria:
     print("")
     print(TEXTO_VICTORIA)
     print("")
+    tablero.ver_tablero(array_original, ALTO)
+    print("")
 else:
     print("")
     print(TEXTO_DERROTA)
+    print("")
+    tablero.ver_tablero(array_copia, ALTO)
     print("")
