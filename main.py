@@ -22,7 +22,9 @@ posicion_y = 0 # Coordenada Y
 CARACTER_TOCADO = "X"
 CARACTER_AGUA = "O"
 CARACTER_VACIO = "~"
-CARACTER_POSICION_BARCO = "1"
+CARACTER_PORTA = "P"
+CARACTER_SUBMA = "S"
+CARACTER_DESTRUC = "D"
 CANTIDAD_DISPAROS = 50
 MINIMO_RANDOM = 0 # Mínimo para el rango de valores aleatorios
 TAMANYO_PORTA = 4 
@@ -51,11 +53,11 @@ tablero.crear_tablero(array_original, ANCHO, ALTO, CARACTER_VACIO)
 tablero.crear_tablero(array_copia, ANCHO, ALTO, CARACTER_VACIO)
 
 # Introducir Portaaviones
-tablero.generar_barcos(contador, 1, fin_de_bucle, MINIMO_RANDOM, TAMANYO_PORTA, ANCHO, ALTO, array_copia, CARACTER_POSICION_BARCO)
+tablero.generar_barcos(contador, 1, fin_de_bucle, MINIMO_RANDOM, TAMANYO_PORTA, ANCHO, ALTO, array_copia, CARACTER_PORTA)
 # Introducir Submarinos
-tablero.generar_barcos(contador, 2, fin_de_bucle, MINIMO_RANDOM, TAMANYO_SUBMA, ANCHO, ALTO, array_copia, CARACTER_POSICION_BARCO)
+tablero.generar_barcos(contador, 2, fin_de_bucle, MINIMO_RANDOM, TAMANYO_SUBMA, ANCHO, ALTO, array_copia, CARACTER_SUBMA)
 # Introducir Destructores
-tablero.generar_barcos(contador, 3, fin_de_bucle, MINIMO_RANDOM, TAMANYO_DESTRUC, ANCHO, ALTO, array_copia, CARACTER_POSICION_BARCO)
+tablero.generar_barcos(contador, 3, fin_de_bucle, MINIMO_RANDOM, TAMANYO_DESTRUC, ANCHO, ALTO, array_copia, CARACTER_DESTRUC)
 
 # Bucle que se repite mientras queden disparos y barcos
 while contador < CANTIDAD_DISPAROS and not victoria:
@@ -102,11 +104,11 @@ while contador < CANTIDAD_DISPAROS and not victoria:
         print("")
         continue
 
-    if disparo.disparo_acertado(array_copia, int(posicion_x), int(posicion_y), CARACTER_POSICION_BARCO): # Comprobar si se ha acertado en un barco
+    if disparo.disparo_acertado(array_copia, int(posicion_x), int(posicion_y), CARACTER_PORTA, CARACTER_DESTRUC, CARACTER_SUBMA): # Comprobar si se ha acertado en un barco
         disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_TOCADO)
         print("")
         print(TEXTO_TOCADO)
-        if not tablero.quedan_barcos(array_copia, ANCHO, ALTO, CARACTER_POSICION_BARCO): # Comprobar si quedan barcos
+        if not tablero.quedan_barcos(array_copia, ANCHO, ALTO, CARACTER_PORTA, CARACTER_DESTRUC, CARACTER_SUBMA): # Comprobar si quedan barcos
             victoria = True
     else:
         disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_AGUA)

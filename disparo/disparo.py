@@ -1,4 +1,4 @@
-def disparo_acertado(array_copia, x, y, caracter_barco):
+def disparo_acertado(array_copia, x, y, caracter1, caracter2, caracter3):
     """
     Comprueba si un disparo ha impactado en un barco.
 
@@ -8,12 +8,16 @@ def disparo_acertado(array_copia, x, y, caracter_barco):
     :type x: int
     :param y: Coordenada Y del disparo.
     :type y: int
-    :param caracter_barco: Carácter que representa el barco.
-    :type caracter_barco: str
+    :param caracter1: Carácter que representa un tipo de barco.
+    :type caracter1: str
+    :param caracter2: Carácter que representa un tipo de barco.
+    :type caracter2: str
+    :param caracter3: Carácter que representa un tipo de barco.
+    :type caracter3: str
     :return: True si el disparo ha sido acertado, False en caso contrario.
     :rtype: bool
     """   
-    return array_copia[y][x] == caracter_barco
+    return array_copia[y][x] == caracter1 or array_copia[y][x] == caracter2 or array_copia[y][x] == caracter3
 
 
 def marcar_disparo(array_original, array_copia, x, y, caracter):
