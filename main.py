@@ -18,6 +18,9 @@ contador = 0 # Contador para bucles
 posicion_x = 0 # Coordenada X
 posicion_y = 0 # Coordenada Y
 
+#Objetos
+validator = utils.Util()
+
 # Constantes
 CARACTER_TOCADO = "X"
 CARACTER_AGUA = "O"
@@ -53,11 +56,11 @@ tablero.crear_tablero(array_original, ANCHO, ALTO, CARACTER_VACIO)
 tablero.crear_tablero(array_copia, ANCHO, ALTO, CARACTER_VACIO)
 
 # Introducir Portaaviones
-tablero.generar_barcos(contador, 1, fin_de_bucle, MINIMO_RANDOM, TAMANYO_PORTA, ANCHO, ALTO, array_copia, CARACTER_PORTA)
+tablero.generar_barcos(contador, 1, fin_de_bucle, MINIMO_RANDOM, TAMANYO_PORTA, ANCHO, ALTO, array_copia, CARACTER_PORTA, validator)
 # Introducir Submarinos
-tablero.generar_barcos(contador, 2, fin_de_bucle, MINIMO_RANDOM, TAMANYO_SUBMA, ANCHO, ALTO, array_copia, CARACTER_SUBMA)
+tablero.generar_barcos(contador, 2, fin_de_bucle, MINIMO_RANDOM, TAMANYO_SUBMA, ANCHO, ALTO, array_copia, CARACTER_SUBMA, validator)
 # Introducir Destructores
-tablero.generar_barcos(contador, 3, fin_de_bucle, MINIMO_RANDOM, TAMANYO_DESTRUC, ANCHO, ALTO, array_copia, CARACTER_DESTRUC)
+tablero.generar_barcos(contador, 3, fin_de_bucle, MINIMO_RANDOM, TAMANYO_DESTRUC, ANCHO, ALTO, array_copia, CARACTER_DESTRUC, validator)
 
 # Bucle que se repite mientras queden disparos y barcos
 while contador < CANTIDAD_DISPAROS and not victoria:
@@ -66,12 +69,12 @@ while contador < CANTIDAD_DISPAROS and not victoria:
         print("")
         posicion_x = input(TEXTO_POSICION_X) # Pedir coordenada x
 
-        if not utils.es_numero_entero(posicion_x): # Comprobar si es número entero
+        if not validator.es_numero_entero(posicion_x): # Comprobar si es número entero
             print("")
             print("ERROR:", ERROR_NUMERO_ENTERO)
             continue
         else:
-            if not utils.opcion_valida(posicion_x, ANCHO - 1): # Comprobar si el valor está dentro del límte del tablero
+            if not validator.opcion_valida(posicion_x, ANCHO - 1): # Comprobar si el valor está dentro del límte del tablero
                 print("")
                 print("ERROR:", ERROR_LIMITE_TABLERO) 
                 continue
@@ -79,12 +82,12 @@ while contador < CANTIDAD_DISPAROS and not victoria:
         print("")
         posicion_y = input(TEXTO_POSICION_Y)  # Pedir coordenada y
 
-        if not utils.es_numero_entero(posicion_y): # Comprobar si es número entero
+        if not validator.es_numero_entero(posicion_y): # Comprobar si es número entero
             print("")
             print("ERROR:", ERROR_NUMERO_ENTERO)
             continue
         else:
-            if not utils.opcion_valida(posicion_y, ALTO - 1): # Comprobar si el valor está dentro del límte del tablero
+            if not validator.opcion_valida(posicion_y, ALTO - 1): # Comprobar si el valor está dentro del límte del tablero
                 print("")
                 print("ERROR:", ERROR_LIMITE_TABLERO)
                 continue

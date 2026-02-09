@@ -1,13 +1,41 @@
-from utils.utils import valor_aleatorio
+import random
 
-def es_horizontal():
+class Barco:
     """
-    Determina aleatoriamente si la orientación es horizontal o vertical.
+    Representa un barco dentro del juego.
+    """
 
-    :return: True si es horizontal, False si es vertical.
-    :rtype: bool
-    """
-    if valor_aleatorio(0, 1) == 0:
-        return True
-    else:
-        return False
+    def __init__(self, tamanyo, caracter):
+        """
+        Inicializa un barco con un tamaño y una orientación aleatoria.
+
+        :param tamanyo: Tamaño del barco.
+        :type tamanyo: int
+        :param caracter: Carácter que representa al barco.
+        :type caracter: str
+        """
+        self.tamanyo = tamanyo
+        self.caracter = caracter
+        self.horizontal = self.es_horizontal()
+
+
+    def es_horizontal(self):
+        """
+        Determina aleatoriamente si la orientación del barco es horizontal o vertical.
+
+        :return: True si es horizontal, False si es vertical.
+        :rtype: bool
+        """
+        return random.choice([True, False])
+    
+
+    def calcular_maximo(self, alto_o_ancho):
+        """
+        Calcula el límite máximo para colocar un barco en un eje determinado.
+
+        :param alto_o_ancho: Dimensión total del eje.
+        :type alto_o_ancho: int
+        :return: Posición máxima permitida.
+        :rtype: int
+        """
+        return alto_o_ancho - self.tamanyo
