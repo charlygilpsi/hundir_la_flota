@@ -19,6 +19,7 @@ class Util:
         """
         return valor.isdigit() and 0 <= int(valor) <= opcion_maxima
 
+
     @staticmethod
     def es_numero_entero(valor):
         """
@@ -35,6 +36,7 @@ class Util:
         except ValueError:
             return False
 
+
     @staticmethod
     def posicion_valida(posicion, maximo):
         """
@@ -48,7 +50,8 @@ class Util:
         :rtype: bool
         """
         return posicion <= maximo
-
+    
+    
     @staticmethod
     def valor_aleatorio(menor, mayor):
         """

@@ -1,40 +1,32 @@
 import disparo.disparo as disparo
 import tablero.tablero as tablero
-import utils.utils as utils
+import barco.barco as barco
+import utils.utils as util
 import os
 
-########
-# MAIN #
-########
+#Objetos
+portaaviones = barco.Barco(4, "P")
+destructor = barco.Barco(2, "D")
+submarino = barco.Barco(1, "S")
+tablero_objeto = tablero.Tablero(10, 10)
+validator = util.Util()
 
 #Variables
-array_original = [] # Array que se muestra al usuario con los disparos
-array_copia = [] # Array copia donde guardar las posiciones de los barcos
-fin_de_bucle = False # Banderas para saber cuándo finalizar los bucles
+tablero_usuario = [] # Array que se muestra al usuario con los disparos
+tablero_barcos = [] # Array copia donde guardar las posiciones de los barcos
 victoria = False # Banderas para saber cuándo finalizar los bucles
 coordenadas_validas = False # Banderas para saber cuándo finalizar los bucles
-horizontal = False # Booleano que marca si el barco se introduce en horizontal o vertical
 contador = 0 # Contador para bucles
 posicion_x = 0 # Coordenada X
 posicion_y = 0 # Coordenada Y
 
-#Objetos
-validator = utils.Util()
-
 # Constantes
+ARRAY_CARACTERES = [portaaviones.caracter, destructor.caracter, submarino.caracter]
 CARACTER_TOCADO = "X"
 CARACTER_AGUA = "O"
 CARACTER_VACIO = "~"
-CARACTER_PORTA = "P"
-CARACTER_SUBMA = "S"
-CARACTER_DESTRUC = "D"
 CANTIDAD_DISPAROS = 50
 MINIMO_RANDOM = 0 # Mínimo para el rango de valores aleatorios
-TAMANYO_PORTA = 4 
-TAMANYO_SUBMA = 3 
-TAMANYO_DESTRUC = 2 
-ANCHO = 10 # Dimensiones del tablero
-ALTO = 10 # Dimensiones del tablero
 # Textos para los inputs
 TEXTO_POSICION_X = "Introduzca la coordenada x: "
 TEXTO_POSICION_Y = "Introduzca la coordenada y: "
@@ -52,15 +44,15 @@ ERROR_NUMERO_ENTERO =  "Introduce números enteros, por favor"
 
 # Generar dos tableros, uno para mostrar al usuario (original) 
 # y otro para guardar los barcos (copia) y comparar con los disparos
-tablero.crear_tablero(array_original, ANCHO, ALTO, CARACTER_VACIO)
-tablero.crear_tablero(array_copia, ANCHO, ALTO, CARACTER_VACIO)
+tablero_objeto.crear_tablero(tablero_usuario, CARACTER_VACIO)
+tablero_objeto.crear_tablero(tablero_barcos, CARACTER_VACIO)
 
 # Introducir Portaaviones
-tablero.generar_barcos(contador, 1, fin_de_bucle, MINIMO_RANDOM, TAMANYO_PORTA, ANCHO, ALTO, array_copia, CARACTER_PORTA, validator)
+tablero_objeto.generar_barcos(1, MINIMO_RANDOM, tablero_barcos, portaaviones, ARRAY_CARACTERES)
 # Introducir Submarinos
-tablero.generar_barcos(contador, 2, fin_de_bucle, MINIMO_RANDOM, TAMANYO_SUBMA, ANCHO, ALTO, array_copia, CARACTER_SUBMA, validator)
+tablero_objeto.generar_barcos(2, MINIMO_RANDOM, tablero_barcos, destructor, ARRAY_CARACTERES)
 # Introducir Destructores
-tablero.generar_barcos(contador, 3, fin_de_bucle, MINIMO_RANDOM, TAMANYO_DESTRUC, ANCHO, ALTO, array_copia, CARACTER_DESTRUC, validator)
+tablero_objeto.generar_barcos(3, MINIMO_RANDOM, tablero_barcos, submarino, ARRAY_CARACTERES)
 
 # Bucle que se repite mientras queden disparos y barcos
 while contador < CANTIDAD_DISPAROS and not victoria:
@@ -74,7 +66,7 @@ while contador < CANTIDAD_DISPAROS and not victoria:
             print("ERROR:", ERROR_NUMERO_ENTERO)
             continue
         else:
-            if not validator.opcion_valida(posicion_x, ANCHO - 1): # Comprobar si el valor está dentro del límte del tablero
+            if not validator.opcion_valida(posicion_x, tablero_objeto.ancho  - 1): # Comprobar si el valor está dentro del límte del tablero
                 print("")
                 print("ERROR:", ERROR_LIMITE_TABLERO) 
                 continue
@@ -87,34 +79,36 @@ while contador < CANTIDAD_DISPAROS and not victoria:
             print("ERROR:", ERROR_NUMERO_ENTERO)
             continue
         else:
-            if not validator.opcion_valida(posicion_y, ALTO - 1): # Comprobar si el valor está dentro del límte del tablero
+            if not validator.opcion_valida(posicion_y, tablero_objeto.alto - 1 ): # Comprobar si el valor está dentro del límte del tablero
                 print("")
                 print("ERROR:", ERROR_LIMITE_TABLERO)
                 continue
         
+
         coordenadas_validas = True # Si llega hasta aquí, es que los valores son válidos, y termina el bucle anidado
+        disparo_valido = disparo.Disparo(int(posicion_x), int(posicion_y))
 
     os.system('cls') # Borrar consola
 
-    if disparo.disparo_repetido(array_original, int(posicion_x), int(posicion_y), CARACTER_TOCADO, CARACTER_AGUA): # Comprobar si ya se había disparado en esta casilla
+    if tablero_objeto.disparo_repetido(tablero_usuario, disparo_valido, CARACTER_TOCADO, CARACTER_AGUA): # Comprobar si ya se había disparado en esta casilla
         print("")
         print(TEXTO_REPETIDO)
         print("")
         print(TEXTO_BALAS_RESTANTES, CANTIDAD_DISPAROS - contador) # Mostrar mensaje con las balas restantes
         print("")
         coordenadas_validas = False
-        tablero.ver_tablero(array_original, ALTO)
+        tablero_objeto.ver_tablero(tablero_usuario)
         print("")
         continue
 
-    if disparo.disparo_acertado(array_copia, int(posicion_x), int(posicion_y), CARACTER_PORTA, CARACTER_DESTRUC, CARACTER_SUBMA): # Comprobar si se ha acertado en un barco
-        disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_TOCADO)
+    if disparo_valido.comprobar_acierto(tablero_barcos, ARRAY_CARACTERES): # Comprobar si se ha acertado en un barco
+        tablero_objeto.marcar_disparo(tablero_usuario, tablero_barcos, disparo_valido, CARACTER_TOCADO)
         print("")
         print(TEXTO_TOCADO)
-        if not tablero.quedan_barcos(array_copia, ANCHO, ALTO, CARACTER_PORTA, CARACTER_DESTRUC, CARACTER_SUBMA): # Comprobar si quedan barcos
+        if not tablero_objeto.quedan_barcos(tablero_barcos, ARRAY_CARACTERES): # Comprobar si quedan barcos
             victoria = True
     else:
-        disparo.marcar_disparo(array_original, array_copia, int(posicion_x), int(posicion_y), CARACTER_AGUA)
+        tablero_objeto.marcar_disparo(tablero_usuario, tablero_barcos, disparo_valido, CARACTER_AGUA)
         print(TEXTO_AGUA)
 
     if contador < CANTIDAD_DISPAROS:
@@ -126,10 +120,10 @@ while contador < CANTIDAD_DISPAROS and not victoria:
     # print("")
     # print("BARCOS")
     # print("")
-    # tablero.ver_tablero(array_copia, ALTO)
+    # tablero_objeto.ver_tablero(tablero_barcos)
 
     print("")
-    tablero.ver_tablero(array_original, ALTO) # Mostrar tablero con los disparos efectuados
+    tablero_objeto.ver_tablero(tablero_usuario) # Mostrar tablero con los disparos efectuados
     print("")
     print(TEXTO_BALAS_RESTANTES, CANTIDAD_DISPAROS - contador) # Mostrar mensaje con las balas restantes
 
@@ -139,11 +133,11 @@ if victoria:
     print("")
     print(TEXTO_VICTORIA)
     print("")
-    tablero.ver_tablero(array_original, ALTO)
+    tablero_objeto.ver_tablero(tablero_usuario)
     print("")
 else:
     print("")
     print(TEXTO_DERROTA)
     print("")
-    tablero.ver_tablero(array_copia, ALTO)
+    tablero_objeto.ver_tablero(tablero_barcos)
     print("")
