@@ -14,6 +14,7 @@ class Tablero:
         self.ancho = ancho
         self.alto = alto
 
+
     def crear_tablero(self, array, caracter_vacio):
         """
         Genera un tablero bidimensional (lista de listas) con las dimensiones indicadas.

@@ -1,52 +1,56 @@
 class Interfaz:
-    def __init__(self, textos, utils):
+    """
+    Gestiona la interacción con el usuario por consola.
+    """
+
+    def __init__(self, textos):
         """
-        Inicializa una interfaz con textos para el usuario
-        y validaciones de entrada
-        
-        :param textos: Objeto de la clase textos que contiene los mensajes para el usuario
-        :type textos: Texto
-        :param utils: Objeto de la clase Utils para validar inputs
-        :type utils: Utils
+        :param textos: Diccionario de textos del juego
+        :type textos: dict[str, str]
         """
         self.textos = textos
-        self.utils = utils
 
 
-    def lanzar_mensaje(self, key):
+    def pedir_coordenada(self, eje):
         """
-        Lanza un mensaje al usuario
+        Solicita una coordenada al usuario.
 
-        :param key: Clave para los textos del objeto Textos.
-        :type key: str
-        :return: None
+        :param eje: 'x' o 'y'
+        :type eje: str
+        :return: Coordenada introducida
+        :rtype: int
         """
-        print(self.textos.obtener_texto[key])
-    
-
-    def error_no_entero(self, valor, key):
-        """
-        Imprime el texto de error correspondiente 
-        si el usuario no ha introducido un entero
-        
-        :param valor: Valor introducido por el usuario.
-        :type valor: str
-        :param key: Clave para los textos del objeto Textos.
-        :type key: str
-        :return: None
-        """
-        if not self.utils.es_numero_entero(valor):
-            print(self.lanzar_mensaje(key))
+        while True:
+            try:
+                return int(input(self.textos[f"TEXTO_POSICION_{eje.upper()}"]))
+            except ValueError:
+                print(self.textos["ERROR_NUMERO_ENTERO"])
 
 
-    def pedir_coordenada(self, key):
+    def mostrar_resultado_disparo(self, resultado):
         """
-        Pide una coordenada por teclado y devuelve su valor
-        
-        :param key: Clave para los textos del objeto Textos.
-        :type key: str
-        :return: Valor introducido por el usuario.
-        :rtype: str
+        Muestra el resultado de un disparo.
         """
-        value = input(self.lanzar_mensaje(key))
-        return value
+        if resultado == "TOCADO":
+            print(self.textos["TEXTO_TOCADO"])
+        elif resultado == "AGUA":
+            print(self.textos["TEXTO_AGUA"])
+        elif resultado == "REPETIDO":
+            print(self.textos["TEXTO_REPETIDO"])
+
+
+    def mostrar_balas(self, balas):
+        """
+        Muestra las balas restantes.
+        """
+        print(f"{self.textos['TEXTO_BALAS_RESTANTES']}{balas}")
+
+
+    def mostrar_fin_partida(self, estado):
+        """
+        Muestra el mensaje final de la partida.
+        """
+        if estado == "VICTORIA":
+            print(self.textos["TEXTO_VICTORIA"])
+        elif estado == "DERROTA":
+            print(self.textos["TEXTO_DERROTA"])
