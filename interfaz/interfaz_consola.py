@@ -108,7 +108,7 @@ class InterfazConsola:
             print("")
 
 
-    def borrar_resultado(self):
+    def borrar_consola(self):
         """
         Borra lo escrito en la consola
         

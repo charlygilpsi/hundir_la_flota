@@ -46,7 +46,7 @@ def main():
         y = interfaz.pedir_coordenada("y", tablero_interno.alto - 1)
 
         resultado = juego.disparar(x, y)
-        interfaz.borrar_resultado()
+        interfaz.borrar_consola()
         interfaz.mostrar_resultado(resultado)
         interfaz.mostrar_tablero(tablero_usuario)
         interfaz.mostrar_balas(DISPAROS_MAXIMOS - juego.disparos_realizados)
