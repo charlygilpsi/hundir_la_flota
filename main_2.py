@@ -17,29 +17,42 @@ def main():
     validador = Util()
     interfaz = InterfazConsola(TEXTOS, validador)
 
-    # Crear barcos
+    # Constantes
+    CARACTER_VACIO = "~"
+    CARACTER_TOCADO = "X"
+    CARACTER_AGUA = "O"
+    DISPAROS_MAXIMOS = 50
+
+    # Barcos
     portaaviones = Barco(4, 1, "P")
     destructores = Barco(3, 2, "D")
     submarinos = Barco(2, 3, "S")
 
     barcos = [portaaviones, destructores, submarinos]
+    array_caracteres = [b.caracter for b in barcos]
 
-    # Crear tablero y juego
     tablero = Tablero(10, 10, barcos)
-    juego = Juego(tablero, disparos_maximos=50)
+    juego = Juego(
+        tablero,
+        DISPAROS_MAXIMOS,
+        CARACTER_VACIO,
+        CARACTER_TOCADO,
+        CARACTER_AGUA
+    )
 
-    while juego.quedan_disparos() and not juego.hay_victoria():
+    while juego.quedan_disparos() and not juego.hay_victoria(array_caracteres):
         x = interfaz.pedir_coordenada("x", tablero.ancho - 1)
         y = interfaz.pedir_coordenada("y", tablero.alto - 1)
 
-        resultado = juego.disparar(x, y)
+        resultado = juego.disparar(x, y, array_caracteres)
         interfaz.mostrar_resultado(resultado)
-        interfaz.mostrar_balas(juego.disparos_maximos - juego.disparos_realizados)
 
-        tablero.ver_tablero()
+        interfaz.mostrar_tablero(tablero, juego.tablero_usuario)
+        interfaz.mostrar_balas(DISPAROS_MAXIMOS - juego.disparos_realizados)
 
-    interfaz.mostrar_mensaje_final(juego.hay_victoria())
+    interfaz.mostrar_mensaje_final(juego.hay_victoria(array_caracteres))
 
 
 if __name__ == "__main__":
     main()
+

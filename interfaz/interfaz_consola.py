@@ -1,20 +1,17 @@
 """
 Interfaz de consola del juego Hundir la Flota.
-Gestiona entradas y salidas por pantalla.
 """
 
 class InterfazConsola:
     """
-    Interfaz de usuario por consola.
+    Gestiona la interacción con el usuario por consola.
     """
 
     def __init__(self, textos, validador):
         """
-        Inicializa la interfaz.
-
         :param textos: Diccionario de textos del juego.
         :type textos: dict
-        :param validador: Objeto encargado de validar entradas.
+        :param validador: Objeto validador.
         :type validador: Util
         """
         self.textos = textos
@@ -22,9 +19,9 @@ class InterfazConsola:
 
     def pedir_coordenada(self, eje, limite):
         """
-        Solicita una coordenada al usuario.
+        Solicita una coordenada válida al usuario.
 
-        :param eje: Eje a solicitar ('x' o 'y').
+        :param eje: Eje ('x' o 'y').
         :type eje: str
         :param limite: Valor máximo permitido.
         :type limite: int
@@ -44,14 +41,30 @@ class InterfazConsola:
 
             return int(valor)
 
+
     def mostrar_resultado(self, resultado):
         """
-        Muestra el resultado de un disparo.
+        Muestra el resultado del disparo.
 
         :param resultado: Resultado del disparo.
         :type resultado: str
         """
-        print(self.textos.get(f"TEXTO_{resultado}", resultado))
+        print(self.textos[f"TEXTO_{resultado}"])
+
+
+    def mostrar_tablero(self, tablero, array):
+        """
+        Muestra el tablero visible al usuario.
+
+        :param tablero: Objeto tablero.
+        :type tablero: Tablero
+        :param array: Tablero a mostrar.
+        :type array: list
+        """
+        print("")
+        tablero.ver_tablero(array)
+        print("")
+
 
     def mostrar_balas(self, restantes):
         """
@@ -61,6 +74,7 @@ class InterfazConsola:
         :type restantes: int
         """
         print(self.textos["TEXTO_BALAS_RESTANTES"], restantes)
+
 
     def mostrar_mensaje_final(self, victoria):
         """
