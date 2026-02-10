@@ -30,6 +30,10 @@ class Juego:
         self.caracter_vacio = caracter_vacio
         self.caracter_tocado = caracter_tocado
         self.caracter_agua = caracter_agua
+        array_caracteres = []
+
+        for barco in self.tablero.barcos:
+            array_caracteres.append(barco.caracter)
 
         # Tableros
         self.tablero_usuario = []
@@ -38,6 +42,9 @@ class Juego:
         # Inicialización
         self.tablero.crear_tablero(self.tablero_usuario, self.caracter_vacio)
         self.tablero.crear_tablero(self.tablero_barcos, self.caracter_vacio)
+
+        for i in range(3):
+            self.tablero.generar_barcos(self.tablero_barcos, self.tablero.barcos[i], array_caracteres)
 
 
     def disparar(self, x, y, array_caracteres):
@@ -54,7 +61,7 @@ class Juego:
         :rtype: str
         """
         if self.tablero.disparo_repetido(
-            self.tablero_usuario, (x, y), self.caracter_tocado, self.caracter_agua
+            self.tablero_usuario, x, y, self.caracter_tocado, self.caracter_agua
         ):
             return "REPETIDO"
 

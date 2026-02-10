@@ -1,7 +1,7 @@
 import random
 
 class Tablero:
-    def __init__(self, ancho, alto):
+    def __init__(self, ancho, alto, barcos):
         """
         Inicializa un tablero bidimensional.
         
@@ -10,9 +10,12 @@ class Tablero:
         :type ancho: int
         :param alto: número de filas.
         :type alto: int
+        :param barcos: Array de objetos tipo barco.
+        :type barcos: list
         """
         self.ancho = ancho
         self.alto = alto
+        self.barcos = barcos
 
 
     def crear_tablero(self, array, caracter_vacio):
@@ -130,7 +133,7 @@ class Tablero:
         return False
 
 
-    def generar_barcos(self, minimo, array, barco, array_caracteres):
+    def generar_barcos(self, array, barco, array_caracteres):
         """
         Genera y coloca un barcos aleatoriamente en el tablero.
 
@@ -138,8 +141,6 @@ class Tablero:
         indicado en el atributo cantidad del objeto barco,
         comprobando que no se solapen entre sí.
 
-        :param minimo: Valor mínimo para las posiciones aleatorias.
-        :type minimo: int
         :param array: Tablero donde se colocan los barcos.
         :type array: list
         :param barco: Barco que se va a colocar en el tablero.
@@ -159,8 +160,8 @@ class Tablero:
             max_x = barco.calcular_maximo(self.ancho)
             max_y = barco.calcular_maximo(self.alto)
 
-            posicion_x = random.randint(minimo, max_x)
-            posicion_y = random.randint(minimo, max_y)
+            posicion_x = random.randint(0, max_x)
+            posicion_y = random.randint(0, max_y)
 
             if not self.ya_hay_barco_en_posicion(array, barco, posicion_x, posicion_y, array_caracteres):
                 self.rellenar_tablero(array, barco, posicion_x, posicion_y)
@@ -170,7 +171,7 @@ class Tablero:
             raise RuntimeError("No se pudieron colocar todos los barcos")
         
 
-    def marcar_disparo(self, array_original, array_copia, disparo, caracter):
+    def marcar_disparo(self, array_original, array_copia, x, y, caracter):
         """
         Marca un disparo en ambos tableros.
 
@@ -184,11 +185,11 @@ class Tablero:
         :type caracter: str
         :return: None
         """
-        array_copia[disparo.y][disparo.x] = caracter
-        array_original[disparo.y][disparo.x] = caracter
+        array_copia[y][x] = caracter
+        array_original[y][x] = caracter
 
 
-    def disparo_repetido(self, array, disparo, caracter_tocado, caracter_agua):
+    def disparo_repetido(self, array, x, y, caracter_tocado, caracter_agua):
         """
         Comprueba si el disparo se ha realizado sobre una casilla ya descubierta.
 
@@ -203,4 +204,23 @@ class Tablero:
         :return: True si el disparo es repetido, False en caso contrario.
         :rtype: bool
         """
-        return array[disparo.y][disparo.x] == caracter_tocado or array[disparo.y][disparo.x] == caracter_agua
+        return array[y][x] == caracter_tocado or array[y][x] == caracter_agua
+    
+
+    def comprobar_acierto(self, array_copia, x, y, array_caracteres):
+        """
+        Determina si el disparo impacta en un barco.
+
+        :param array_copia: Tablero interno con los barcos.
+        :type array_copia: list
+        :param x: Coordenada x que introduce el usuario por teclado
+        :type x: int
+        :param y: Coordenada y que introduce el usuario por teclado
+        :type y: int
+        :param array_caracteres: Lista de caracteres de barco (portaaviones, destructor, submarino).
+        :type array_caracteres: list
+        :return: True si el disparo ha sido acertado, False en caso contrario.
+        :rtype: bool
+        """
+
+        return array_copia[y][x] in array_caracteres

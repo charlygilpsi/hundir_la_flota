@@ -1,6 +1,7 @@
 """
 Interfaz de consola del juego Hundir la Flota.
 """
+import os
 
 class InterfazConsola:
     """
@@ -87,3 +88,11 @@ class InterfazConsola:
             print(self.textos["TEXTO_VICTORIA"])
         else:
             print(self.textos["TEXTO_DERROTA"])
+
+
+    def borrar_resultado(self):
+        """
+        Borra lo escrito en la consola
+        
+        """
+        os.system('cls')
