@@ -58,14 +58,22 @@ class InterfazConsola:
 
     def mostrar_tablero(self, tablero):
         """
-        Muestra el tablero visible al usuario.
+        Muestra por consola el tablero de juego con índices de filas y columnas.
+
+        El tablero se imprime en formato matricial:
+        - La primera línea muestra los índices de las columnas.
+        - Cada fila se muestra precedida por su índice correspondiente.
 
         :param tablero: Objeto tablero.
         :type tablero: Tablero
         """
 
-        tablero.ver_tablero()
-        print("")
+        encabezado = "   " + " ".join(str(i) for i in range(len(tablero._casillas[0])))
+        print(encabezado)
+
+        for i in range(tablero.alto):
+            fila_str = f"{i:<2} " + " ".join(tablero._casillas[i])
+            print(fila_str)
 
 
     def mostrar_balas(self, restantes):

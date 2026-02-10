@@ -28,19 +28,12 @@ class Tablero:
 
     def ver_tablero(self):
         """
-        Muestra por consola el tablero de juego con índices de filas y columnas.
+        Devuelve el tablero.
 
-        El tablero se imprime en formato matricial:
-        - La primera línea muestra los índices de las columnas.
-        - Cada fila se muestra precedida por su índice correspondiente.
-
+        :return: Array que representa el tablero
+        :rtype: list
         """
-        encabezado = "   " + " ".join(str(i) for i in range(len(self._casillas[0])))
-        print(encabezado)
-
-        for i in range(self.alto):
-            fila_str = f"{i:<2} " + " ".join(self._casillas[i])
-            print(fila_str)
+        return self._casillas
 
 
     def quedan_barcos(self):
