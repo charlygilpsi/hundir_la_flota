@@ -28,7 +28,6 @@ class Tablero:
         :type array: list
         :param caracter_vacio: Carácter utilizado para inicializar cada celda.
         :type caracter_vacio: str
-        :return: None
         """
         for i in range(self.alto):
             fila = []
@@ -52,7 +51,6 @@ class Tablero:
         :type x: int
         :param y: Coordenada inicial en el eje Y.
         :type y: int
-        :return: None
         """
         if barco.horizontal:
             for i in range(barco.tamanyo):
@@ -74,7 +72,6 @@ class Tablero:
 
         :param array: Tablero bidimensional a mostrar.
         :type array: list[list[str]]
-        :return: None
         """
         encabezado = "   " + " ".join(str(i) for i in range(len(array[0])))
         print(encabezado)
@@ -147,7 +144,6 @@ class Tablero:
         :type barco: Barco
         :param array_caracteres: Lista de caracteres identificadores de los barcos.
         :type array_caracteres: list
-        :return: None
         """
         contador = 0
         intentos_maximos = 1000
@@ -183,7 +179,6 @@ class Tablero:
         :type disparo: Disparo
         :param caracter: Carácter que representa el resultado del disparo.
         :type caracter: str
-        :return: None
         """
         array_copia[y][x] = caracter
         array_original[y][x] = caracter

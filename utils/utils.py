@@ -1,5 +1,3 @@
-import random
-
 class Util:
     """
     Clase de utilidades con métodos auxiliares de validación y generación de valores.
@@ -35,33 +33,3 @@ class Util:
             return True
         except ValueError:
             return False
-
-
-    @staticmethod
-    def posicion_valida(posicion, maximo):
-        """
-        Comprueba si una posición se encuentra dentro del límite permitido.
-
-        :param posicion: Posición a comprobar.
-        :type posicion: int
-        :param maximo: Valor máximo permitido.
-        :type maximo: int
-        :return: True si la posición es válida, False en caso contrario.
-        :rtype: bool
-        """
-        return posicion <= maximo
-    
-    
-    @staticmethod
-    def valor_aleatorio(menor, mayor):
-        """
-        Genera un número entero aleatorio dentro de un rango dado.
-
-        :param menor: Valor mínimo del rango.
-        :type menor: int
-        :param mayor: Valor máximo del rango.
-        :type mayor: int
-        :return: Número entero aleatorio entre menor y mayor (ambos incluidos).
-        :rtype: int
-        """
-        return random.randint(menor, mayor)

@@ -18,6 +18,7 @@ class InterfazConsola:
         self.textos = textos
         self.validador = validador
 
+
     def pedir_coordenada(self, eje, limite):
         """
         Solicita una coordenada válida al usuario.
@@ -50,7 +51,9 @@ class InterfazConsola:
         :param resultado: Resultado del disparo.
         :type resultado: str
         """
+        print("")
         print(self.textos[f"TEXTO_{resultado}"])
+        print("")
 
 
     def mostrar_tablero(self, tablero, array):
@@ -62,7 +65,7 @@ class InterfazConsola:
         :param array: Tablero a mostrar.
         :type array: list
         """
-        print("")
+
         tablero.ver_tablero(array)
         print("")
 
@@ -75,6 +78,7 @@ class InterfazConsola:
         :type restantes: int
         """
         print(self.textos["TEXTO_BALAS_RESTANTES"], restantes)
+        print("")
 
 
     def mostrar_mensaje_final(self, victoria):
@@ -86,8 +90,10 @@ class InterfazConsola:
         """
         if victoria:
             print(self.textos["TEXTO_VICTORIA"])
+            print("")
         else:
             print(self.textos["TEXTO_DERROTA"])
+            print("")
 
 
     def borrar_resultado(self):

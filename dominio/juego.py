@@ -41,10 +41,10 @@ class Juego:
 
         # Inicialización
         self.tablero.crear_tablero(self.tablero_usuario, self.caracter_vacio)
-        self.tablero.crear_tablero(self.tablero_barcos, self.caracter_vacio)
+        self.tablero.crear_tablero(self.tablero_barcos, self.caracter_vacio) 
 
-        for i in range(3):
-            self.tablero.generar_barcos(self.tablero_barcos, self.tablero.barcos[i], array_caracteres)
+        for barco in self.tablero.barcos:
+            self.tablero.generar_barcos(self.tablero_barcos, barco, array_caracteres)
 
 
     def disparar(self, x, y, array_caracteres):

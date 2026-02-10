@@ -8,7 +8,6 @@ from dominio.barco import Barco
 from interfaz.interfaz_consola import InterfazConsola
 from utils.utils import Util
 from config.textos import TEXTOS
-import os
 
 
 def main():
