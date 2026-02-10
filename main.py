@@ -31,9 +31,12 @@ def main():
     barcos = [portaaviones, destructores, submarinos]
     array_caracteres = [b.caracter for b in barcos]
 
-    tablero = Tablero(10, 10, barcos)
+
+    tablero_usuario = Tablero(10, 10, barcos, CARACTER_VACIO)
+    tablero_interno = Tablero(10, 10, barcos, CARACTER_VACIO)
     juego = Juego(
-        tablero,
+        tablero_usuario,
+        tablero_interno,
         DISPAROS_MAXIMOS,
         CARACTER_VACIO,
         CARACTER_TOCADO,
@@ -41,13 +44,13 @@ def main():
     )
 
     while juego.quedan_disparos() and not juego.hay_victoria(array_caracteres):
-        x = interfaz.pedir_coordenada("x", tablero.ancho - 1)
-        y = interfaz.pedir_coordenada("y", tablero.alto - 1)
+        x = interfaz.pedir_coordenada("x", tablero_interno.ancho - 1)
+        y = interfaz.pedir_coordenada("y", tablero_interno.alto - 1)
 
         resultado = juego.disparar(x, y, array_caracteres)
         interfaz.borrar_resultado()
         interfaz.mostrar_resultado(resultado)
-        interfaz.mostrar_tablero(tablero, juego.tablero_usuario)
+        interfaz.mostrar_tablero(tablero_usuario)
         interfaz.mostrar_balas(DISPAROS_MAXIMOS - juego.disparos_realizados)
 
     interfaz.mostrar_mensaje_final(juego.hay_victoria(array_caracteres))

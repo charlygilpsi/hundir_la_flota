@@ -1,7 +1,7 @@
 import random
 
 class Tablero:
-    def __init__(self, ancho, alto, barcos):
+    def __init__(self, ancho, alto, barcos, caracter_vacio):
         """
         Inicializa un tablero bidimensional.
         
@@ -12,57 +12,20 @@ class Tablero:
         :type alto: int
         :param barcos: Array de objetos tipo barco.
         :type barcos: list
+        :param caracter_vacio: Carácter que representa un espacio vacío.
+        :type caracter_tocado: str
         """
         self.ancho = ancho
         self.alto = alto
         self.barcos = barcos
 
-
-    def crear_tablero(self, array, caracter_vacio):
-        """
-        Genera un tablero bidimensional (lista de listas) con las dimensiones indicadas.
-
-        Cada posición del tablero se inicializa con el carácter especificado como vacío.
-
-        :param array: Lista que contendrá el tablero generado.
-        :type array: list
-        :param caracter_vacio: Carácter utilizado para inicializar cada celda.
-        :type caracter_vacio: str
-        """
-        for i in range(self.alto):
-            fila = []
-            for j in range(self.ancho):
-                fila.append(caracter_vacio)
-            array.append(fila)
+        self._casillas = [
+            [caracter_vacio for _ in range(ancho)]
+            for _ in range(alto)
+        ]
 
 
-    def rellenar_tablero(self, array, barco, x, y):
-        """
-        Introduce un barco en el tablero según la orientación indicada.
-
-        El barco se coloca a partir de la posición (x, y) y ocupa tantas
-        posiciones como indique su tamaño.
-
-        :param array: Tablero donde se colocará el barco.
-        :type array: list
-        :param barco: Barco que se va a colocar en el tablero.
-        :type barco: Barco
-        :param x: Coordenada inicial en el eje X.
-        :type x: int
-        :param y: Coordenada inicial en el eje Y.
-        :type y: int
-        """
-        if barco.horizontal:
-            for i in range(barco.tamanyo):
-                array[y][x] = barco.caracter
-                x = x + 1
-        else:
-            for i in range(barco.tamanyo):
-                array[y][x] = barco.caracter
-                y = y + 1
-
-
-    def ver_tablero(self, array):
+    def ver_tablero(self):
         """
         Muestra por consola el tablero de juego con índices de filas y columnas.
 
@@ -70,49 +33,16 @@ class Tablero:
         - La primera línea muestra los índices de las columnas.
         - Cada fila se muestra precedida por su índice correspondiente.
 
-        :param array: Tablero bidimensional a mostrar.
-        :type array: list[list[str]]
         """
-        encabezado = "   " + " ".join(str(i) for i in range(len(array[0])))
+        encabezado = "   " + " ".join(str(i) for i in range(len(self._casillas[0])))
         print(encabezado)
 
         for i in range(self.alto):
-            fila_str = f"{i:<2} " + " ".join(array[i])
+            fila_str = f"{i:<2} " + " ".join(self._casillas[i])
             print(fila_str)
 
 
-    def ya_hay_barco_en_posicion(self, array, barco, x, y, array_caracteres):
-        """
-        Comprueba si ya existe un barco en las posiciones donde se pretende colocar otro.
-
-        :param array: Tablero donde se realiza la comprobación.
-        :type array: list
-        :param barco: Barco que se pretende colocar en el tablero.
-        :type barco: Barco
-        :param x: Coordenada inicial en el eje X.
-        :type x: int
-        :param y: Coordenada inicial en el eje Y.
-        :type y: int
-        :param array_caracteres: Lista de caracteres identificadores de los barcos.
-        :type array_caracteres: list
-        :return: True si hay un barco en alguna posición, False en caso contrario.
-        :rtype: bool
-        """
-        if barco.horizontal:
-            for i in range(barco.tamanyo):
-                if array[y][x] in array_caracteres:
-                    return True
-                x = x + 1
-        else:
-            for i in range(barco.tamanyo):
-                if array[y][x] in array_caracteres:
-                    return True
-                y = y + 1
-
-        return False
-
-
-    def quedan_barcos(self, array, array_caracteres):
+    def quedan_barcos(self, array_caracteres):
         """
         Comprueba si quedan barcos sin hundir en el tablero.
 
@@ -125,12 +55,26 @@ class Tablero:
         """
         for i in range(self.alto):
             for j in range(self.ancho):
-                if array[i][j] in array_caracteres:
+                if self._casillas[i][j] in array_caracteres:
                     return True
         return False
+    
 
+    def marcar_disparo(self, x, y, caracter):
+        """
+        Marca un disparo en el tablero.
 
-    def generar_barcos(self, array, barco, array_caracteres):
+        :param x: Coordenada inicial en el eje X.
+        :type x: int
+        :param y: Coordenada inicial en el eje Y.
+        :type y: int
+        :param caracter: Carácter que representa el resultado del disparo.
+        :type caracter: str
+        """
+        self._casillas[y][x] = caracter
+    
+
+    def generar_barcos(self, barco, array_caracteres):
         """
         Genera y coloca un barcos aleatoriamente en el tablero.
 
@@ -138,8 +82,6 @@ class Tablero:
         indicado en el atributo cantidad del objeto barco,
         comprobando que no se solapen entre sí.
 
-        :param array: Tablero donde se colocan los barcos.
-        :type array: list
         :param barco: Barco que se va a colocar en el tablero.
         :type barco: Barco
         :param array_caracteres: Lista de caracteres identificadores de los barcos.
@@ -159,39 +101,22 @@ class Tablero:
             posicion_x = random.randint(0, max_x)
             posicion_y = random.randint(0, max_y)
 
-            if not self.ya_hay_barco_en_posicion(array, barco, posicion_x, posicion_y, array_caracteres):
-                self.rellenar_tablero(array, barco, posicion_x, posicion_y)
+            if not self._ya_hay_barco_en_posicion(barco, posicion_x, posicion_y, array_caracteres):
+                self._rellenar_tablero(barco, posicion_x, posicion_y)
                 contador = contador + 1
         
         if intentos == intentos_maximos:
             raise RuntimeError("No se pudieron colocar todos los barcos")
-        
-
-    def marcar_disparo(self, array_original, array_copia, x, y, caracter):
-        """
-        Marca un disparo en ambos tableros.
-
-        :param array_original: Tablero visible para el jugador.
-        :type array_original: list
-        :param array_copia: Tablero interno.
-        :type array_copia: list
-        :param disparo: Disparo que se va a realizar en el tablero.
-        :type disparo: Disparo
-        :param caracter: Carácter que representa el resultado del disparo.
-        :type caracter: str
-        """
-        array_copia[y][x] = caracter
-        array_original[y][x] = caracter
 
 
-    def disparo_repetido(self, array, x, y, caracter_tocado, caracter_agua):
+    def disparo_repetido(self, x, y, caracter_tocado, caracter_agua):
         """
         Comprueba si el disparo se ha realizado sobre una casilla ya descubierta.
 
-        :param array: Tablero visible para el jugador.
-        :type array: list
-        :param disparo: Disparo que se ha realizado en el tablero.
-        :type disparo: Disparo
+        :param x: Coordenada x que introduce el usuario por teclado
+        :type x: int
+        :param y: Coordenada y que introduce el usuario por teclado
+        :type y: int
         :param caracter_tocado: Carácter que representa un disparo acertado.
         :type caracter_tocado: str
         :param caracter_agua: Carácter que representa un disparo fallido.
@@ -199,15 +124,13 @@ class Tablero:
         :return: True si el disparo es repetido, False en caso contrario.
         :rtype: bool
         """
-        return array[y][x] == caracter_tocado or array[y][x] == caracter_agua
+        return self._casillas[y][x] == caracter_tocado or self._casillas[y][x] == caracter_agua
     
 
-    def comprobar_acierto(self, array_copia, x, y, array_caracteres):
+    def comprobar_acierto(self, x, y, array_caracteres):
         """
         Determina si el disparo impacta en un barco.
 
-        :param array_copia: Tablero interno con los barcos.
-        :type array_copia: list
         :param x: Coordenada x que introduce el usuario por teclado
         :type x: int
         :param y: Coordenada y que introduce el usuario por teclado
@@ -218,4 +141,57 @@ class Tablero:
         :rtype: bool
         """
 
-        return array_copia[y][x] in array_caracteres
+        return self._casillas[y][x] in array_caracteres
+
+
+    def _rellenar_tablero(self, barco, x, y):
+        """
+        Introduce un barco en el tablero según la orientación indicada.
+
+        El barco se coloca a partir de la posición (x, y) y ocupa tantas
+        posiciones como indique su tamaño.
+
+        :param barco: Barco que se va a colocar en el tablero.
+        :type barco: Barco
+        :param x: Coordenada inicial en el eje X.
+        :type x: int
+        :param y: Coordenada inicial en el eje Y.
+        :type y: int
+        """
+        if barco.horizontal:
+            for i in range(barco.tamanyo):
+                self._casillas[y][x] = barco.caracter
+                x = x + 1
+        else:
+            for i in range(barco.tamanyo):
+                self._casillas[y][x] = barco.caracter
+                y = y + 1
+
+
+    def _ya_hay_barco_en_posicion(self, barco, x, y, array_caracteres):
+        """
+        Comprueba si ya existe un barco en las posiciones donde se pretende colocar otro.
+
+        :param barco: Barco que se pretende colocar en el tablero.
+        :type barco: Barco
+        :param x: Coordenada inicial en el eje X.
+        :type x: int
+        :param y: Coordenada inicial en el eje Y.
+        :type y: int
+        :param array_caracteres: Lista de caracteres identificadores de los barcos.
+        :type array_caracteres: list
+        :return: True si hay un barco en alguna posición, False en caso contrario.
+        :rtype: bool
+        """
+        if barco.horizontal:
+            for i in range(barco.tamanyo):
+                if self._casillas[y][x] in array_caracteres:
+                    return True
+                x = x + 1
+        else:
+            for i in range(barco.tamanyo):
+                if self._casillas[y][x] in array_caracteres:
+                    return True
+                y = y + 1
+
+        return False

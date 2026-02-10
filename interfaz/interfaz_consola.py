@@ -56,17 +56,15 @@ class InterfazConsola:
         print("")
 
 
-    def mostrar_tablero(self, tablero, array):
+    def mostrar_tablero(self, tablero):
         """
         Muestra el tablero visible al usuario.
 
         :param tablero: Objeto tablero.
         :type tablero: Tablero
-        :param array: Tablero a mostrar.
-        :type array: list
         """
 
-        tablero.ver_tablero(array)
+        tablero.ver_tablero()
         print("")
 
 

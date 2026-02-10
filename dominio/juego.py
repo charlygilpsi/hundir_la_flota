@@ -8,11 +8,13 @@ class Juego:
     Controla el estado y las reglas del juego Hundir la Flota.
     """
 
-    def __init__(self, tablero, disparos_maximos, caracter_vacio, caracter_tocado, caracter_agua):
+    def __init__(self, tablero_usuario, tablero_barco, disparos_maximos, caracter_vacio, caracter_tocado, caracter_agua):
         """
         Inicializa una nueva partida.
 
-        :param tablero: Objeto tablero.
+        :param tablero_usuario: Objeto tablero para el usuario.
+        :type tablero: Tablero
+        :param tablero_barco: Objeto tablero interno.
         :type tablero: Tablero
         :param disparos_maximos: Número máximo de disparos permitidos.
         :type disparos_maximos: int
@@ -23,7 +25,8 @@ class Juego:
         :param caracter_agua: Carácter para disparos fallidos.
         :type caracter_agua: str
         """
-        self.tablero = tablero
+        self.tablero_usuario = tablero_usuario
+        self.tablero_barco = tablero_barco
         self.disparos_maximos = disparos_maximos
         self.disparos_realizados = 0
 
@@ -32,19 +35,12 @@ class Juego:
         self.caracter_agua = caracter_agua
         array_caracteres = []
 
-        for barco in self.tablero.barcos:
+        for barco in self.tablero_barco.barcos:
             array_caracteres.append(barco.caracter)
 
-        # Tableros
-        self.tablero_usuario = []
-        self.tablero_barcos = []
-
         # Inicialización
-        self.tablero.crear_tablero(self.tablero_usuario, self.caracter_vacio)
-        self.tablero.crear_tablero(self.tablero_barcos, self.caracter_vacio) 
-
-        for barco in self.tablero.barcos:
-            self.tablero.generar_barcos(self.tablero_barcos, barco, array_caracteres)
+        for barco in self.tablero_barco.barcos:
+            self.tablero_barco.generar_barcos(barco, array_caracteres)
 
 
     def disparar(self, x, y, array_caracteres):
@@ -60,26 +56,27 @@ class Juego:
         :return: Resultado del disparo.
         :rtype: str
         """
-        if self.tablero.disparo_repetido(
-            self.tablero_usuario, x, y, self.caracter_tocado, self.caracter_agua
+        if self.tablero_usuario.disparo_repetido(
+            x, y, self.caracter_tocado, self.caracter_agua
         ):
             return "REPETIDO"
 
         self.disparos_realizados += 1
 
-        if self.tablero.comprobar_acierto(self.tablero_barcos, x, y, array_caracteres):
-            self.tablero.marcar_disparo(
-                self.tablero_usuario,
-                self.tablero_barcos,
+        if self.tablero_barco.comprobar_acierto(x, y, array_caracteres):
+            self.tablero_barco.marcar_disparo(
+                x,
+                y,
+                self.caracter_tocado
+            )
+            self.tablero_usuario.marcar_disparo(
                 x,
                 y,
                 self.caracter_tocado
             )
             return "TOCADO"
         else:
-            self.tablero.marcar_disparo(
-                self.tablero_usuario,
-                self.tablero_barcos,
+            self.tablero_usuario.marcar_disparo(
                 x,
                 y,
                 self.caracter_agua
@@ -106,4 +103,4 @@ class Juego:
         :return: True si no quedan barcos.
         :rtype: bool
         """
-        return not self.tablero.quedan_barcos(self.tablero_barcos, array_caracteres)
+        return not self.tablero_barco.quedan_barcos(array_caracteres)
