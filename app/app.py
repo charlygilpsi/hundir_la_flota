@@ -11,7 +11,16 @@ from interfaz.interfaz_consola import InterfazConsola
 from interfaz.menu import Menu
 from utils.utils import Util
 from utils.excepciones import SalirDelPrograma, VolverAlMenu
-from config.textos import TEXTOS
+from config.mensajes import TEXTOS
+from config.constantes import (
+    ANCHO_TABLERO,
+    ALTO_TABLERO,
+    CARACTER_VACIO,
+    CARACTER_TOCADO,
+    CARACTER_AGUA,
+    DISPAROS_MAXIMOS,
+    CONFIG_BARCOS,
+)
 
 
 class App:
@@ -52,19 +61,24 @@ class App:
         :return: Objeto Juego inicializado.
         :rtype: Juego
         """
-        CARACTER_VACIO = "~"
-        CARACTER_TOCADO = "X"
-        CARACTER_AGUA = "O"
-        DISPAROS_MAXIMOS = 50
+        barcos = [
+        Barco(longitud, cantidad, identificador)
+        for longitud, cantidad, identificador in CONFIG_BARCOS
+        ]
 
-        portaaviones = Barco(4, 1, "P")
-        destructores = Barco(3, 2, "D")
-        submarinos = Barco(2, 3, "S")
+        tablero_usuario = Tablero(
+            ANCHO_TABLERO,
+            ALTO_TABLERO,
+            barcos,
+            CARACTER_VACIO
+        )
 
-        barcos = [portaaviones, destructores, submarinos]
-
-        tablero_usuario = Tablero(10, 10, barcos, CARACTER_VACIO)
-        tablero_interno = Tablero(10, 10, barcos, CARACTER_VACIO)
+        tablero_interno = Tablero(
+            ANCHO_TABLERO,
+            ALTO_TABLERO,
+            barcos,
+            CARACTER_VACIO
+        )
 
         return Juego(
             tablero_usuario,
