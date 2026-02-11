@@ -13,11 +13,11 @@ DIFICULTAD = {
         ]
     },
 
-    # Media (clásico)
+    # Media
     2: {
         "ancho": 10,
         "alto": 10,
-        "disparos": 60,
+        "disparos": 50,
         "barcos": [
             (5, 1, "P"),
             (4, 1, "A"),
@@ -30,7 +30,7 @@ DIFICULTAD = {
     3: {
         "ancho": 10,
         "alto": 10,
-        "disparos": 45,
+        "disparos": 40,
         "barcos": [
             (5, 1, "P"),
             (4, 1, "A"),
