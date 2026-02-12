@@ -21,7 +21,7 @@ class App:
 
     Orquesta el funcionamiento general del programa:
     - Muestra el menú principal.
-    - Crea nuevas partidas.
+    - Crea nuevas partidas en función de la dificultad.
     - Ejecuta el bucle del juego.
     - Gestiona las excepciones de navegación.
     """

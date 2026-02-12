@@ -25,6 +25,7 @@ class Menu:
         :rtype: str
         :raises SalirDelPrograma: Si el usuario selecciona la opción de salir.
         """
+        self._interfaz.borrar_consola()
         while True:
             opcion = self._menu_principal()
 

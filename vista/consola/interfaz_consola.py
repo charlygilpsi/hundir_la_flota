@@ -3,6 +3,7 @@ Interfaz de consola del juego Hundir la Flota.
 """
 from utils.excepciones import VolverAlMenu
 import os
+import sys
 
 class InterfazConsola:
     """
@@ -151,7 +152,11 @@ class InterfazConsola:
         """
         Borra lo escrito en la consola.
         """
-        os.system('cls')
+        # \033[2J → limpia pantalla visible
+        # \033[3J → limpia scrollback buffer
+        # \033[H → mueve el cursor a la posición (0,0)
+        print("\033[2J\033[3J\033[H", end="")
+        os.system("cls")
 
     
     def mostrar_instrucciones(self, instrucciones):
