@@ -32,7 +32,7 @@ class App:
         """
         validador = Util()
         self.interfaz = InterfazConsola(TEXTOS, validador)
-        self.menu = Menu(self.interfaz)
+        self.menu = Menu(self.interfaz, constante.INSTRUCCIONES)
 
 
     def ejecutar(self):
@@ -52,7 +52,8 @@ class App:
         """
         Crea e inicializa una nueva partida del juego.
 
-        :param dificultad: Objeto con parámetros de dificultad
+        :param dificultad: Diccionario con parámetros de dificultad
+        :type dificultad: dict
         :return: Objeto Juego inicializado.
         :rtype: Juego
         """
@@ -95,10 +96,11 @@ class App:
         :type juego: Juego
         """
         try:
+            self.interfaz.borrar_consola()
+            self.interfaz.mostrar_tablero(juego.tablero_usuario)
             while juego.quedan_disparos() and not juego.hay_victoria():
 
                 self.interfaz.opcion_volver_menu()
-
                 x, y = self.interfaz.pedir_disparo(
                     juego.tablero_barco.ancho,
                     juego.tablero_barco.alto
@@ -107,8 +109,8 @@ class App:
                 resultado = juego.disparar(x, y)
 
                 self.interfaz.borrar_consola()
-                self.interfaz.mostrar_resultado(resultado)
                 self.interfaz.mostrar_tablero(juego.tablero_usuario)
+                self.interfaz.mostrar_resultado(resultado)
                 self.interfaz.mostrar_balas(juego.disparos_restantes())
 
             self.interfaz.mostrar_mensaje_final(juego.hay_victoria())

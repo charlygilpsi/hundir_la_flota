@@ -2,17 +2,25 @@ from utils.excepciones import SalirDelPrograma
 
 class Menu:
 
-    def __init__(self, interfaz):
+    def __init__(self, interfaz, instrucciones):
         """
         Inicializa un menú con opciones para que el usuario interactúe
+
+        :param interfaz: Objeto de la clase InterfazConsola.
+        :type interfaz: InterfazConsola
+        :param instrucciones: Instrucciones del juego.
+        :type instrucciones: str
         """
         self._interfaz = interfaz
+        self.instrucciones = instrucciones
 
 
     def ejecutar_menu_principal(self):
         """
         Ejecuta el menú principal mostrando las opciones hasta que el usuario inicie el juego o decida salir.
         
+        :param instrucciones: Instrucciones del juego.
+        :type instrucciones: str
         :return: El valor devuelto por el menú de dificultad cuando el usuario selecciona jugar.
         :rtype: str
         :raises SalirDelPrograma: Si el usuario selecciona la opción de salir.
@@ -24,7 +32,7 @@ class Menu:
                 case "1":
                     return self.ejecutar_menu_dificultad()
                 case "2":
-                    self._interfaz.mostrar_instrucciones()
+                    self._interfaz.mostrar_instrucciones(self.instrucciones)
                 case "3":
                     raise SalirDelPrograma()
                 case _:
