@@ -23,6 +23,7 @@ TEXTOS = {
     "FIN_DE_PROGRAMA" : "FIN DE PROGRAMA",
 
     # Errores
-    "ERROR_LIMITE_TABLERO": "La posición del disparo excede los límites del tablero",
-    "ERROR_NUMERO_ENTERO": "Introduce números enteros, por favor"
+    "ERROR_LIMITE_TABLERO": "ERROR: La posición del disparo excede los límites del tablero",
+    "ERROR_NUMERO_ENTERO": "ERROR: Introduce números enteros, por favor",
+    "ERROR_MENU" : "ERROR: Opción inválida",
 }

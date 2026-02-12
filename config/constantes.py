@@ -48,15 +48,6 @@ CARACTER_AGUA = "O"
 
 # Instrucciones
 INSTRUCCIONES = """
-OBJETIVO
---------
-Descubrir y hundir todos los barcos enemigos antes de que
-se agoten los disparos disponibles. El tamaño del tablero,
-la cantidad de barcos y la cantidad de disparos dependen
-de la dificultad.
-
-------------------------------------------------------------
-
 FÁCIL
 -------
 - Tablero 8x8.
@@ -66,8 +57,6 @@ FÁCIL
 - 1 destructor de tamaño 3
 - 1 lancha de tamaño 2
 
-------------------------------------------------------------
-
 MEDIA
 ------
 - Tablero 10x10.
@@ -76,8 +65,6 @@ MEDIA
 - 1 acorazado de tamaño 4
 - 2 destructores de tamaño 3
 - 1 lancha de tamaño 2
-
-------------------------------------------------------------
 
 DIFÍCIL
 --------
@@ -89,7 +76,6 @@ DIFÍCIL
 - 1 lancha de tamaño 2
 
 ------------------------------------------------------------
-
 Pulsa ENTER para volver al menú...
 ============================================================
 """

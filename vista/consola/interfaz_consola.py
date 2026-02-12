@@ -152,11 +152,11 @@ class InterfazConsola:
         """
         Borra lo escrito en la consola.
         """
-        # \033[2J → limpia pantalla visible
-        # \033[3J → limpia scrollback buffer
+        # \033[2J → limpia toda la pantalla
         # \033[H → mueve el cursor a la posición (0,0)
-        print("\033[2J\033[3J\033[H", end="")
-        os.system("cls")
+        print("\033[2J\033[H", end="")
+        os.system('cls' if os.name == 'nt' else 'clear')
+
 
     
     def mostrar_instrucciones(self, instrucciones):

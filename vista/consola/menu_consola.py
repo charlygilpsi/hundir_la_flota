@@ -37,7 +37,8 @@ class Menu:
                 case "3":
                     raise SalirDelPrograma()
                 case _:
-                    print("Opción no válida")
+                    self._interfaz.borrar_consola()
+                    print(self._interfaz.textos["ERROR_MENU"])
 
     
     def ejecutar_menu_dificultad(self):
@@ -47,6 +48,7 @@ class Menu:
         :return: El número correspondiente a la opción.
         :rtype: int
         """
+        self._interfaz.borrar_consola()
         while True:
             opcion = self._menu_dificultad()
 
@@ -58,7 +60,8 @@ class Menu:
                 case "3":
                     return 3
                 case _:
-                    print("Opción no válida")
+                    self._interfaz.borrar_consola()
+                    print(self._interfaz.textos["ERROR_MENU"])
 
 
     def _menu_principal(self):
@@ -75,7 +78,7 @@ class Menu:
         print("2. Instrucciones")
         print("3. Salir")
         print("")
-        return input("Seleccione opción: ")
+        return input("Introduzca el número correspondiente a la opción deseada: ")
     
 
     def _menu_dificultad(self):
@@ -85,7 +88,6 @@ class Menu:
         :return: Opción introducida por el usuario.
         :rtype: str
         """
-        self._interfaz.borrar_consola()
         print("")
         print("Dificultad")
         print("")
@@ -93,4 +95,4 @@ class Menu:
         print("2. Media")
         print("3. Difícil")
         print("")
-        return input("Seleccione opción: ")
+        return input("Introduzca el número correspondiente a la opción deseada: ")
