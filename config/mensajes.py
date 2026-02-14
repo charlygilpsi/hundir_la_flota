@@ -9,6 +9,7 @@ TEXTOS = {
     "TEXTO_POSICION_Y": "Introduzca la coordenada y: ",
 
     # Disparos
+    "TEXTO_TOCADO_Y_HUNDIDO": "TOCADO Y HUNDIDO",
     "TEXTO_TOCADO": "TOCADO",
     "TEXTO_AGUA": "AGUA",
     "TEXTO_REPETIDO": "YA HABÍAS DISPARADO EN ESTE HUECO. NO PIERDES LA BALA.",

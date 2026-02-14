@@ -58,22 +58,18 @@ class Juego:
         self.disparos_realizados += 1
 
         if self.tablero_barco.comprobar_acierto(x, y):
-            self.tablero_barco.marcar_disparo(
-                x,
-                y,
-                self.caracter_tocado
-            )
-            self.tablero_usuario.marcar_disparo(
-                x,
-                y,
-                self.caracter_tocado
-            )
 
-            if self.barco_hundido(x, y):
-                return "TOCADO Y HUNDIDO"
+            barco = self.tablero_barco.obtener_barco_en_posicion(x, y)
+            barco.recibir_impacto()
+
+            self.tablero_barco.marcar_disparo(x, y, self.caracter_tocado)
+            self.tablero_usuario.marcar_disparo(x, y, self.caracter_tocado)
+
+            if barco.hundido():
+                return "TOCADO_Y_HUNDIDO"
             else:
                 return "TOCADO"
-            
+
         else:
             self.tablero_usuario.marcar_disparo(
                 x,
@@ -111,18 +107,3 @@ class Juego:
         :rtype: int
         """
         return self.disparos_maximos - self.disparos_realizados
-    
-
-    def barco_hundido(self, x, y):
-        """
-        Comprueba si al barco impactado le quedan puntos de vida
-        
-        :param x: Coordenada x.
-        :type x: int
-        :param y: Coordenada y.
-        :type y: int
-        :return: True si ha sido hundido, False si no
-        """
-        barco = self.tablero_barco.obtener_barco_en_posicion(x, y)
-        barco.recibir_impacto()
-        return barco.hundido()
