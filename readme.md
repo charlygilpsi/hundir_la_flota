@@ -49,6 +49,7 @@ python main.py
 
 ## Estrucutra del proyecto
 
+```text
 hundir_la_flota/
 │
 ├─ main.py                  # Punto de entrada del juego
@@ -68,3 +69,4 @@ hundir_la_flota/
 └─ config/
     ├─ constantes.py        # Parámetros de configuración (tablero, caracteres)
     └─ mensajes.py          # Textos e instrucciones del juego
+```
