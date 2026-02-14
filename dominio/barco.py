@@ -47,11 +47,11 @@ class Barco:
         return alto_o_ancho - self.tamanyo
     
 
-    def queda_vida_restante(self):
+    def hundido(self):
         """
-        Comprueba la vida restante del barco.
+        Comprueba si el barco ha sido hundido (vida restante es igual a 0)
         
-        :return: True si queda vida, False si no
+        :return: True si ha sido hundido, False si no
         :rtype: bool
         """
-        return self.vida_restante > 0
+        return self.vida_restante == 0
