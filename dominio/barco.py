@@ -47,6 +47,13 @@ class Barco:
         return alto_o_ancho - self.tamanyo
     
 
+    def recibir_impacto(self):
+        """
+        Resta un punto de vida al barco
+        """
+        self.vida_restante -= 1
+
+
     def hundido(self):
         """
         Comprueba si el barco ha sido hundido (vida restante es igual a 0)
